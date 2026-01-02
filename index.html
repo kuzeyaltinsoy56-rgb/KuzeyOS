@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KUZEY GALAXY | ULTRA-OS v55.2 FINAL</title>
+    <title>KUZEY GALAXY | ULTRA-OS v63.0 SINGLE-CORE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -110,27 +110,25 @@
         .ach-item i { font-size: 18px; color: var(--gold); }
         .ach-item:hover::after { content: attr(data-title); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: var(--ac); color: #000; padding: 4px 8px; font-size: 10px; white-space: nowrap; border-radius: 4px; pointer-events: none; font-weight: bold; z-index: 10; }
 
-        /* GÖREV PANELİ CSS */
         .mission-panel { grid-column: span 3; background: linear-gradient(90deg, rgba(30, 0, 0, 0.6), rgba(0, 0, 0, 0.8)); border: 1px solid var(--ac2); position: relative; }
-        .mission-panel.critical { animation: panic 1s infinite alternate; border-color: red; }
-        @keyframes panic { from { box-shadow: inset 0 0 10px transparent; } to { box-shadow: inset 0 0 50px rgba(255,0,0,0.3); } }
         .m-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .m-badge { padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold; font-family: var(--font-main); }
         .m-badge.easy { background: var(--ac-green); color: #000; }
         .m-badge.medium { background: var(--gold); color: #000; }
         .m-badge.hard { background: var(--ac2); color: #fff; }
-        .timer-track { width: 100%; height: 6px; background: #333; margin-top: 10px; border-radius: 3px; overflow: hidden; }
-        .timer-fill { height: 100%; width: 100%; background: var(--ac); transition: width 1s linear; }
-        .timer-fill.warn { background: var(--ac2); }
-
+        
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto auto 1fr; gap: 25px; padding-bottom: 50px; transform-style: preserve-3d; }
         .hero-w { grid-column: span 2; background: linear-gradient(135deg, rgba(0,60,60,0.8), rgba(0,0,0,0.9)); display: flex; flex-direction: column; justify-content: center; gap: 15px; }
         .profile-img { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--ac); object-fit: cover; box-shadow: var(--sh); }
         .terminal { font-family: 'JetBrains Mono'; font-size: 11px; color: #0f0; opacity: 0.8; overflow: hidden; background: rgba(0,0,0,0.3); padding: 5px; border: 1px solid #222; }
         .chat-log { height: 350px; overflow-y: auto; margin-bottom: 15px; border: 1px solid var(--ac-dim); padding: 15px; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); }
-        .msg.user { background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), transparent); border-left: 3px solid var(--ac); padding: 5px; margin-bottom: 5px; }
-        .msg.ai { background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent); border-left: 3px solid var(--gold); color: var(--gold); padding: 5px; margin-bottom: 5px; }
         
+        .msg.user { background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), transparent); border-left: 3px solid var(--ac); padding: 8px; margin-bottom: 8px; }
+        .msg.ai { background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent); border-left: 3px solid var(--gold); color: #ddd; padding: 8px; margin-bottom: 8px; }
+        .msg.ai img { max-width: 100%; border: 1px solid var(--ac); border-radius: 4px; margin-top: 5px; box-shadow: 0 0 10px rgba(0,255,255,0.3); }
+        .msg.ai pre { background: #111; padding: 10px; border-radius: 5px; border: 1px solid #333; overflow-x: auto; font-family: 'JetBrains Mono'; color: #0f0; margin-top: 5px; }
+        .msg.ai code { font-family: 'JetBrains Mono'; }
+
         .comm-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(0, 255, 255, 0.1); border: 1px solid var(--ac); margin-bottom: 20px; backdrop-filter: blur(5px); }
         .forum-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 900px; margin: 0 auto; }
         .post-card { background: rgba(10, 20, 30, 0.8); border: 1px solid #333; padding: 15px; transition: 0.3s; position: relative; overflow: hidden; }
@@ -143,6 +141,15 @@
         .act-btn:hover, .act-btn.active { color: var(--ac2); }
         .comments-sec { margin-top: 10px; padding-left: 15px; border-left: 2px solid #333; display: none; }
         .comment-item { margin-top: 8px; font-size: 11px; color: #aaa; background: rgba(0,0,0,0.3); padding: 5px; }
+
+        .lb-item { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid rgba(255,255,255,0.1); font-size:12px; }
+        .lb-item:last-child { border-bottom:none; }
+        .lb-rank { width:25px; color:var(--gold); font-weight:bold; }
+        .lb-user { flex:1; color:#fff; }
+        .lb-xp { color:var(--ac); font-family:var(--font-code); }
+        
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 1px solid var(--ac); box-shadow: var(--sh); background:#000; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0; }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(var(--ac), var(--ac2)); border-radius: 3px; }
@@ -158,26 +165,15 @@
     <div id="gate">
         <div class="auth-box">
             <div class="scan-line"></div>
-            <h1 style="font-family:'Orbitron'; text-align:center; color:#fff; text-shadow:var(--sh); margin-bottom:30px; font-size: 2rem;">KUZEY <span style="color:var(--ac)">OS</span> <small style="font-size:12px; color:var(--ac2)">v55.2 FINAL</small></h1>
+            <h1 style="font-family:'Orbitron'; text-align:center; color:#fff; text-shadow:var(--sh); margin-bottom:30px; font-size: 2rem;">KUZEY <span style="color:var(--ac)">OS</span> <small style="font-size:12px; color:var(--ac2)">v63.0 SINGLE-CORE</small></h1>
             <div id="login-form">
                 <div class="in-grp"><label>IDENTIFICATION</label><input type="text" id="u-in" placeholder="Kullanıcı Adı" autocomplete="off"></div>
                 <div class="in-grp"><label>PASSCODE</label><input type="password" id="p-in" placeholder="Şifre" autocomplete="off"></div>
-                <div class="in-grp" id="otp-grp" style="display:none;">
-                    <label style="color:var(--gold)">SECURE_TOKEN</label>
-                    <input type="text" id="otp-in" placeholder="E-Posta Kodunu Gir" style="border-color:var(--gold); color:var(--gold); text-align:center; letter-spacing:5px; font-size:18px;">
-                </div>
                 <button onclick="Auth.login()" class="b-at">SİSTEME GİRİŞ</button>
                 <div style="display:flex; justify-content:space-between; margin-top:15px;">
                     <button onclick="Auth.toggleReg()" style="background:none; border:none; color:#666; font-size:11px;">[ KAYIT OL ]</button>
                     <button onclick="Auth.guest()" style="background:none; border:none; color:var(--ac); font-size:11px;">> MİSAFİR PROTOKOLÜ <</button>
                 </div>
-            </div>
-            <div id="reg-form" style="display:none;">
-                <div class="in-grp"><label>NEW_USER_ID</label><input type="text" id="r-u" placeholder="Yeni Kullanıcı Adı"></div>
-                <div class="in-grp"><label>LINK_EMAIL</label><input type="email" id="r-e" placeholder="email@adresi.com"></div>
-                <div class="in-grp"><label>SET_PASSCODE</label><input type="password" id="r-p" placeholder="Yeni Şifre"></div>
-                <button onclick="Auth.sendCode()" class="b-at" style="border-color:var(--ac2); color:var(--ac2);">KOD GÖNDER</button>
-                <button onclick="Auth.toggleReg()" style="width:100%; background:none; border:none; color:#f00; margin-top:10px; font-size:11px;">[ İPTAL ]</button>
             </div>
             <p id="msg" style="text-align:center; font-size:11px; margin-top:15px; height:15px; color:var(--ac); font-weight:bold; text-shadow:0 0 5px var(--ac);"></p>
         </div>
@@ -246,9 +242,8 @@
                             <h2 id="m-desc" style="font-family:'Orbitron'; font-size:16px; margin-bottom:5px;">Sistem Yükleniyor...</h2>
                             <div style="display:flex; justify-content:space-between; font-size:10px; color:#aaa;">
                                 <span id="m-reward">ÖDÜL: 0 XP</span>
-                                <span id="m-time-text" style="color:var(--ac)">SÜRE: 00s</span>
+                                <span id="m-time-text" style="color:var(--ac)">SÜRE: YOK</span>
                             </div>
-                            <div class="timer-track"><div id="m-bar" class="timer-fill"></div></div>
                             <div style="margin-top:10px; text-align:right;">
                                 <button onclick="Mission.complete('MANUAL')" class="b-at" style="padding:5px 10px; font-size:10px; width:auto; margin:0; display:none;" id="m-action-btn">MANUEL ROTA</button>
                             </div>
@@ -260,11 +255,16 @@
                             <div class="terminal" style="margin-top:5px; height:60px;"><div id="matrix-code"></div></div>
                         </div>
 
+                        <div class="widget" style="grid-row: span 2; transform: translateZ(25px);">
+                            <h3><i class="fas fa-crown"></i> LİDERLİK TABLOSU</h3>
+                            <div id="lb-list" style="overflow-y:auto; max-height:250px;"></div>
+                        </div>
+
                         <div class="widget" style="grid-row: span 2; transform: translateZ(20px);">
                             <h3><i class="fas fa-trophy"></i> OPERASYON ROZETLERİ</h3>
                             <div class="ach-grid" id="ach-list"></div>
                         </div>
-
+                        
                         <div class="widget" style="transform: translateZ(15px);">
                             <h3><i class="fas fa-music"></i> SONİK DALGA</h3>
                             <div style="text-align:center; margin-bottom:15px; color:var(--ac2);">KUZEY_HYPER_MIX.mp3</div>
@@ -277,25 +277,16 @@
                                 <i class="fas fa-pause" style="cursor:pointer; font-size:20px;" onclick="document.getElementById('bgm').pause()"></i>
                             </div>
                         </div>
-                        
-                        <div class="widget" style="grid-row: span 2; transform: translateZ(25px);">
-                            <h3><i class="fas fa-tasks"></i> GÖREV PROTOKOLLERİ</h3>
-                            <div style="display:flex; gap:5px; margin-bottom:15px;">
-                                <input type="text" id="todo-in" placeholder="Yeni protokol ekle..." style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #333; color:#fff; padding:8px;">
-                                <button onclick="App.addTodo()" style="background:var(--ac); border:none; padding:0 15px; font-weight:bold; color:#000;">+</button>
-                            </div>
-                            <div id="todo-list" class="widget-content"></div>
-                        </div>
                     </section>
 
                     <section class="view">
                         <div class="widget" style="height:100%; display:flex; flex-direction:column; transform: translateZ(40px);">
-                            <h3><i class="fas fa-brain"></i> C.O.R.E. AI (ONLINE)</h3>
+                            <h3><i class="fas fa-brain"></i> C.O.R.E. AI (ULTIMATE)</h3>
                             <div class="chat-log" id="ai-log" style="flex:1;">
-                                <div class="msg ai">Sistemler çevrimiçi. Ben C.O.R.E. Görevleri tamamlaman için buradayım.</div>
+                                <div class="msg ai">Sistemler çevrimiçi. Görsel oluşturabilirim ('... resmi çiz'), kod yazabilirim veya sohbet edebilirim.</div>
                             </div>
                             <div style="display:flex; gap:10px; margin-top:10px;">
-                                <input type="text" id="ai-in" placeholder="Sisteme sor..." style="flex:1; padding:15px; background:rgba(0,0,0,0.5); border:1px solid var(--ac); color:#fff; font-family:var(--font-code);" onkeydown="if(event.key==='Enter') AI.process()">
+                                <input type="text" id="ai-in" placeholder="Örnek: 'Bir uzay gemisi çiz' veya 'HTML kodu yaz'..." style="flex:1; padding:15px; background:rgba(0,0,0,0.5); border:1px solid var(--ac); color:#fff; font-family:var(--font-code);" onkeydown="if(event.key==='Enter') AI.process()">
                                 <button class="b-at" style="width:120px; margin:0;" onclick="AI.process()">İLET</button>
                             </div>
                         </div>
@@ -313,16 +304,16 @@
                     </section>
 
                     <section class="view">
-                        <h2 style="font-family:'Orbitron'; margin-bottom:20px; color:var(--ac2); text-align:center;">MEDYA BAĞLANTISI</h2>
-                        <div class="widget" style="text-align:center; padding:40px; border-color:var(--ac2); max-width:500px; margin:0 auto; transform: translateZ(30px);">
-                            <i class="fas fa-satellite-dish" style="font-size:50px; color:var(--ac2); margin-bottom:20px; opacity:0.8; animation: pulse 2s infinite;"></i>
-                            <h3 style="justify-content:center; color:#fff;">VERİ AKIŞI KESİLDİ</h3>
-                            <p style="color:#aaa; font-size:12px; margin:20px 0; line-height:1.6;">
-                                Güvenlik protokolleri nedeniyle video akışı şu anda işletim sistemi üzerinden görüntülenemiyor.
-                                <br><br>
-                                Lütfen güvenli kanal üzerinden manuel erişim sağlayın.
-                            </p>
-                            <button class="b-at" onclick="window.open('https://www.youtube.com/channel/UC4TwM7_NxfCjsRsqD-gZmTw', '_blank')" style="width:200px; margin:0 auto; border-color:var(--ac);">KANALA GİT</button>
+                        <h2 style="font-family:'Orbitron'; margin-bottom:20px; color:var(--ac2); text-align:center;">GÜVENLİ VİDEO AKIŞI</h2>
+                        <div class="widget" style="text-align:center; padding:20px; border-color:var(--ac2); max-width:800px; margin:0 auto; transform: translateZ(30px);">
+                            <div class="video-wrapper">
+                                <iframe id="yt-player" src="https://www.youtube.com/embed/K8j7CaMKRF4?autoplay=1&mute=1" title="KUZEY GALAXY PLAYER" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                                <div id="video-stat" style="color:var(--ac); font-size:10px;">DURUM: BAĞLANDI</div>
+                                <button class="b-at" onclick="Media.forceReload()" style="width:auto; margin:0; font-size:10px; padding:5px 15px; border-color:var(--ac2); color:var(--ac2);">BAĞLANTIYI ZORLA / YENİLE</button>
+                            </div>
+                            <button class="b-at" onclick="window.open('https://www.youtube.com/channel/UC4TwM7_NxfCjsRsqD-gZmTw', '_blank')" style="width:200px; margin:20px auto 0; border-color:var(--ac);">KANALA GİT</button>
                         </div>
                     </section>
 
@@ -347,7 +338,7 @@
     </div>
 
     <script>
-        let user = "GUEST", tempUser = {}, otpCode = null, userXP = 0;
+        let user = "GUEST", userXP = 0;
         const SFX = { hover: ()=>{}, click: ()=>{} }; 
 
         const LEVELS = [0, 500, 1500, 3000, 5000, 8000, 12000, 20000, 30000, 50000];
@@ -418,6 +409,57 @@
             }
         };
 
+        const UserDB = {
+            save(u, xp) {
+                let db = JSON.parse(localStorage.getItem('KUZEY_USER_STATS') || "{}");
+                db[u] = { xp: xp };
+                localStorage.setItem('KUZEY_USER_STATS', JSON.stringify(db));
+                Leaderboard.update(u, xp);
+            },
+            load(u) {
+                let db = JSON.parse(localStorage.getItem('KUZEY_USER_STATS') || "{}");
+                return db[u] ? db[u].xp : 0;
+            }
+        };
+
+        const Leaderboard = {
+            key: 'KUZEY_LB_DB',
+            data: [],
+            init() {
+                let stored = localStorage.getItem(this.key);
+                if(stored) this.data = JSON.parse(stored);
+                else {
+                    this.data = [
+                        {u: 'KUZEY_ADMIN', xp: 50000},
+                        {u: 'AI_CORE', xp: 35000},
+                        {u: 'Cyber_Wolf', xp: 12000},
+                        {u: 'Neon_Rider', xp: 5400}
+                    ];
+                    this.save();
+                }
+                this.render();
+            },
+            save() { localStorage.setItem(this.key, JSON.stringify(this.data)); },
+            update(u, xp) {
+                let found = false;
+                this.data.forEach(p => { if(p.u === u) { p.xp = xp; found = true; } });
+                if(!found) this.data.push({u: u, xp: xp});
+                this.data.sort((a,b) => b.xp - a.xp);
+                this.save(); this.render();
+            },
+            render() {
+                const el = document.getElementById('lb-list');
+                if(!el) return;
+                el.innerHTML = "";
+                this.data.forEach((p, i) => {
+                    let color = "#fff";
+                    if(i === 0) color = "var(--gold)";
+                    if(p.u === user) color = "var(--ac)";
+                    el.innerHTML += `<div class="lb-item"><span class="lb-rank">${i+1}.</span><span class="lb-user" style="color:${color}">${p.u}</span><span class="lb-xp">${p.xp.toLocaleString()} XP</span></div>`;
+                });
+            }
+        };
+
         const Auth = {
             msg: document.getElementById('msg'),
             toggleReg() {
@@ -434,62 +476,42 @@
         };
 
         const Mission = {
-            current: null, timer: null,
+            current: null,
             pool: [
-                { type: 'AI', text: "Yapay Zeka (C.O.R.E.) ile iletişim kur.", xp: 150, time: 60, diff: 'KOLAY' },
-                { type: 'TODO', text: "Yeni bir görev protokolü (ToDo) ekle.", xp: 100, time: 45, diff: 'KOLAY' },
-                { type: 'COMM', text: "Uzaya şifreli bir sinyal gönder.", xp: 200, time: 90, diff: 'ORTA' },
-                { type: 'MANUAL', text: "Manuel sistem bakımını başlat (Butona bas).", xp: 50, time: 30, diff: 'KOLAY' },
-                { type: 'COMMUNITY', text: "Veri Ağına (Community) yeni giriş yap.", xp: 300, time: 120, diff: 'ZOR' }
+                { type: 'AI', text: "Yapay Zeka (C.O.R.E.) ile iletişim kur.", xp: 150, diff: 'KOLAY' },
+                { type: 'TODO', text: "Yeni bir görev protokolü (ToDo) ekle.", xp: 100, diff: 'KOLAY' },
+                { type: 'COMM', text: "Uzaya şifreli bir sinyal gönder.", xp: 200, diff: 'ORTA' },
+                { type: 'MANUAL', text: "Manuel sistem bakımını başlat (Butona bas).", xp: 50, diff: 'KOLAY' },
+                { type: 'COMMUNITY', text: "Veri Ağına (Community) yeni giriş yap.", xp: 300, diff: 'ZOR' }
             ],
             init() { this.assignNew(); },
             assignNew() {
                 const template = this.pool[Math.floor(Math.random() * this.pool.length)];
-                this.current = { ...template, timeLeft: template.time, maxTime: template.time };
-                this.render(); this.startTimer();
-            },
-            startTimer() {
-                if(this.timer) clearInterval(this.timer);
-                this.timer = setInterval(() => {
-                    if(!this.current) return;
-                    this.current.timeLeft--;
-                    this.render();
-                    if(this.current.timeLeft <= 0) this.fail();
-                }, 1000);
+                this.current = { ...template };
+                this.render();
             },
             render() {
                 if(!this.current) return;
                 const ui = document.getElementById('mission-ui');
-                const bar = document.getElementById('m-bar');
-                if(!ui || !bar) return;
+                if(!ui) return;
                 document.getElementById('m-desc').innerText = this.current.text;
                 document.getElementById('m-reward').innerText = `ÖDÜL: ${this.current.xp} XP`;
-                document.getElementById('m-time-text').innerText = `SÜRE: ${this.current.timeLeft}s`;
                 const badge = document.getElementById('m-diff');
                 badge.innerText = this.current.diff;
                 badge.className = `m-badge ${this.current.diff === 'KOLAY' ? 'easy' : (this.current.diff === 'ORTA' ? 'medium' : 'hard')}`;
-                const pct = (this.current.timeLeft / this.current.maxTime) * 100;
-                bar.style.width = pct + "%";
-                if(pct < 20) { bar.classList.add('warn'); ui.classList.add('critical'); } else { bar.classList.remove('warn'); ui.classList.remove('critical'); }
+                
                 const btn = document.getElementById('m-action-btn');
                 btn.style.display = this.current.type === 'MANUAL' ? 'inline-block' : 'none';
             },
             complete(type) {
                 if(this.current && this.current.type === type) {
-                    clearInterval(this.timer);
                     userXP += this.current.xp;
                     App.updateLevel();
                     const ui = document.getElementById('mission-ui');
                     if(ui) ui.style.borderColor = "#0f0";
-                    document.getElementById('m-desc').innerText = "GÖREV BAŞARILI! SİSTEM GÜNCELLENİYOR...";
+                    document.getElementById('m-desc').innerText = "GÖREV BAŞARILI! YENİ GÖREV ALINIYOR...";
                     setTimeout(() => { if(ui) ui.style.borderColor = "var(--ac2)"; this.assignNew(); }, 2000);
                 }
-            },
-            fail() {
-                clearInterval(this.timer);
-                document.getElementById('m-desc').innerText = "GÖREV BAŞARISIZ! YENİ ROTA HESAPLANIYOR...";
-                document.getElementById('m-desc').style.color = "red";
-                setTimeout(() => { document.getElementById('m-desc').style.color = "white"; this.assignNew(); }, 2000);
             }
         };
 
@@ -502,7 +524,9 @@
                     document.getElementById('os').style.display='grid';
                     setTimeout(()=>document.getElementById('os').style.opacity=1, 100);
                     document.getElementById('op-name').innerText=user.toUpperCase();
-                    this.initAchievements(); Community.init(); Mission.init();
+                    
+                    userXP = UserDB.load(user);
+                    this.initAchievements(); Community.init(); Mission.init(); Leaderboard.init(); Media.init();
                     InputHandler.init(); Canvas.init(); this.loop();
                 },1000);
             },
@@ -512,23 +536,35 @@
                 ACHS.forEach((icon, i) => { grid.innerHTML += `<div class="ach-item" id="ach-${i+1}" data-title="Seviye ${i+1}"><i class="fas ${icon}"></i></div>`; });
             },
             loop() {
-                document.getElementById('clock').innerText=new Date().toLocaleTimeString();
-                let t = document.getElementById('matrix-code');
-                t.innerHTML+=["SYS","LINK","DATA","CORE","ERR"][Math.floor(Math.random()*5)]+" ";
-                if(t.innerHTML.length>300) t.innerHTML="";
-                document.getElementById('cpu-txt').innerText = Math.floor(Math.random()*20+5) + "%";
+                const clockEl = document.getElementById('clock');
+                if(clockEl) clockEl.innerText=new Date().toLocaleTimeString();
+                
+                const matrixEl = document.getElementById('matrix-code');
+                if(matrixEl) {
+                    matrixEl.innerHTML+=["SYS","LINK","DATA","CORE","ERR"][Math.floor(Math.random()*5)]+" ";
+                    if(matrixEl.innerHTML.length>300) matrixEl.innerHTML="";
+                }
+
+                const cpuEl = document.getElementById('cpu-txt');
+                if(cpuEl) cpuEl.innerText = Math.floor(Math.random()*20+5) + "%";
+                
                 this.updateLevel(); setTimeout(()=>this.loop(),500);
             },
             updateLevel() {
                 let lvl = 1;
                 for(let i=0; i<LEVELS.length; i++) if(userXP >= LEVELS[i]) lvl = i+1;
-                document.getElementById('u-lvl').innerText = lvl;
-                document.getElementById('u-rank').innerText = RANKS[lvl-1] || "TANRI";
+                
+                const elLvl = document.getElementById('u-lvl'); if(elLvl) elLvl.innerText = lvl;
+                const elRank = document.getElementById('u-rank'); if(elRank) elRank.innerText = RANKS[lvl-1] || "TANRI";
+                
                 let nextGoal = LEVELS[lvl] || userXP*2;
                 let progress = (userXP / nextGoal) * 100;
-                document.getElementById('xp-bar').style.width = Math.min(progress, 100) + "%";
-                document.getElementById('xp-text').innerText = `${userXP.toLocaleString()} / ${nextGoal.toLocaleString()} XP`;
-                document.getElementById('next-lvl-target').innerText = `SONRAKİ HEDEF: ${nextGoal} XP`;
+                
+                const elBar = document.getElementById('xp-bar'); if(elBar) elBar.style.width = Math.min(progress, 100) + "%";
+                const elText = document.getElementById('xp-text'); if(elText) elText.innerText = `${userXP.toLocaleString()} / ${nextGoal.toLocaleString()} XP`;
+                const elTarget = document.getElementById('next-lvl-target'); if(elTarget) elTarget.innerText = `SONRAKİ HEDEF: ${nextGoal} XP`;
+                
+                UserDB.save(user, userXP);
                 for(let i=1; i<=10; i++) { const el = document.getElementById(`ach-${i}`); if(el && i <= lvl) el.classList.add('unlocked'); }
             },
             addTodo() {
@@ -540,26 +576,55 @@
             }
         };
 
+        const Media = {
+            reloadCount: 0,
+            init() { setTimeout(() => this.forceReload(), 3000); },
+            forceReload() {
+                const iframe = document.getElementById('yt-player');
+                const overlay = document.getElementById('video-stat');
+                const originalSrc = "https://www.youtube.com/embed/K8j7CaMKRF4?autoplay=1&mute=1"; 
+
+                if(overlay) { overlay.innerText = "BAĞLANTI ZORLANIYOR..."; overlay.style.color = "var(--ac2)"; }
+                if(iframe) {
+                    iframe.src = "about:blank"; 
+                    setTimeout(() => {
+                        iframe.src = originalSrc + "&t=" + Date.now(); 
+                        if(overlay) { overlay.innerText = "BAĞLANTI KURULDU (SIGNAL LOCKED)"; overlay.style.color = "#0f0"; }
+                    }, 500);
+                }
+            }
+        };
+
         const AI = {
             in: document.getElementById('ai-in'), log: document.getElementById('ai-log'),
             async process() {
                 let txt = this.in.value; if(!txt) return;
                 this.addMsg(txt, 'user'); this.in.value = "";
                 const loadID = 'load-'+Date.now();
-                this.log.innerHTML += `<div id="${loadID}" class="msg ai"><i class="fas fa-circle-notch fa-spin"></i> C.O.R.E. Bağlanıyor...</div>`;
+                this.log.innerHTML += `<div id="${loadID}" class="msg ai"><i class="fas fa-circle-notch fa-spin"></i> C.O.R.E. İşleniyor...</div>`;
                 this.log.scrollTop = this.log.scrollHeight;
+
+                if (txt.toLowerCase().includes("çiz") || txt.toLowerCase().includes("oluştur") || txt.toLowerCase().includes("görsel") || txt.toLowerCase().includes("resim")) {
+                    const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(txt)}?width=800&height=600&model=flux`;
+                    document.getElementById(loadID).remove();
+                    this.addMsg(`Görsel oluşturuldu:<br><img src="${imgUrl}" onload="document.getElementById('ai-log').scrollTop=document.getElementById('ai-log').scrollHeight">`, 'ai');
+                    Mission.complete('AI');
+                    return;
+                }
+
                 try {
-                    const systemPrompt = `Sen C.O.R.E. isimli, fütüristik bir uzay gemisi yapay zekasısın. Kullanıcı adı: ${user}. Cevapların kısa, havalı, hafif emir kipinde ve bilim kurgu tarzında olsun. Türkçe konuş.`;
-                    const finalPrompt = `${systemPrompt} Kullanıcı dedi ki: ${txt}`;
+                    const systemPrompt = `Sen C.O.R.E. isimli, fütüristik bir uzay gemisi yapay zekasısın. Kullanıcı adı: ${user}. Eğer kullanıcı kod isterse, kodu sadece markdown backtick blokları içinde yaz. Kısa ve net ol.`;
+                    const finalPrompt = `${systemPrompt} Kullanıcı: ${txt}`;
                     const url = `https://text.pollinations.ai/${encodeURIComponent(finalPrompt)}?model=openai`;
                     const response = await fetch(url);
                     if (!response.ok) throw new Error("Ağ hatası.");
-                    const aiText = await response.text();
+                    let aiText = await response.text();
+                    aiText = aiText.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
                     document.getElementById(loadID).remove();
                     this.addMsg(aiText, 'ai');
                     Mission.complete('AI');
                 } catch (error) {
-                    document.getElementById(loadID).innerHTML = `<span style="color:var(--ac2)">BAĞLANTI HATASI: Sunucuya ulaşılamadı.</span>`;
+                    document.getElementById(loadID).innerHTML = `<span style="color:var(--ac2)">HATA: ${error.message}</span>`;
                 }
             },
             addMsg(t, type){ this.log.innerHTML+=`<div class="msg ${type}"><b>${type==='user'?'OP':'AI'}:</b> ${t}</div>`; this.log.scrollTop=this.log.scrollHeight; }
@@ -572,7 +637,7 @@
                 if (stored) this.data = JSON.parse(stored);
                 else {
                     this.data = [
-                        {id: 1, title: 'Sistem Güncellemesi v55.2', body: 'İletişim protokolleri simülasyon moduna alındı. Hatalar giderildi.', author: 'ADMIN', likes: 42, comments: []},
+                        {id: 1, title: 'Sistem Güncellemesi v62.1', body: 'Video oynatıcı onarıldı ve kod bütünlüğü sağlandı.', author: 'ADMIN', likes: 42, comments: []},
                         {id: 2, title: 'Mars Rotası', body: 'Kızıl gezegen için en uygun yörünge hesaplamaları paylaşıldı.', author: 'Pilot_Can', likes: 12, comments: []}
                     ];
                     this.save();
@@ -620,31 +685,17 @@
             }
         };
 
-        // --- DÜZELTİLMİŞ COMM (Simülasyon Modu) ---
         const Comm = {
             send() {
-                let m = document.getElementById('c-msg').value;
-                let s = document.getElementById('c-stat');
-                
+                let m = document.getElementById('c-msg').value; let s = document.getElementById('c-stat');
                 if(!m) return; 
-                
-                // Animasyon Başlat
-                s.innerText = "ŞİFRELEME BAŞLATILDI..."; 
-                s.style.color = "var(--ac)";
-
+                s.innerText = "ŞİFRELEME BAŞLATILDI..."; s.style.color = "var(--ac)";
                 setTimeout(() => {
                     s.innerText = "SİNYAL UZAYA GÖNDERİLİYOR...";
-                    
                     setTimeout(() => {
-                        // BAŞARI SİMÜLASYONU
-                        s.innerText = "İLETİM BAŞARILI (200 OK)"; 
-                        s.style.color = "#0f0"; 
+                        s.innerText = "İLETİM BAŞARILI (200 OK)"; s.style.color = "#0f0"; 
                         document.getElementById('c-msg').value = ""; 
-                        
-                        Mission.complete('COMM'); // Görevi tamamla
-                        userXP += 200; // XP Ver
-                        App.updateLevel();
-
+                        Mission.complete('COMM'); userXP += 200; App.updateLevel();
                     }, 1500); 
                 }, 1000); 
             }

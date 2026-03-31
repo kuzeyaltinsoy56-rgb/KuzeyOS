@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --ac: #00ffff; 
-            --ac2: #ff4400; 
+            --ac: #00ffff;
+            --ac2: #ff4400;
             --ac-green: #00ff66;
             --ac-dim: rgba(0, 255, 255, 0.15);
             --sh: 0 0 30px rgba(0, 255, 255, 0.5);
@@ -17,11 +17,14 @@
             --gold: #ffd700;
             --font-main: 'Orbitron', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
+            --ui-scale: 1;
+            --widget-scale: 1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; user-select: none; }
         
         body { 
             background: #000; color: #fff; font-family: var(--font-code);
+            font-size: calc(14px * var(--font-scale));
             height: 100vh; overflow: hidden; 
             background: radial-gradient(circle at center, #050505 0%, #000 100%);
         }
@@ -59,7 +62,7 @@
         .nav-icon:hover, .nav-icon.active { color: var(--ac); text-shadow: var(--sh); transform: scale(1.15); border: 1px solid var(--ac); box-shadow: var(--sh); }
 
         /* --- 4D SAHNE --- */
-        #scene-wrap { position: relative; height: 100vh; width: 100%; overflow: hidden; perspective: 1500px; }
+        #scene-wrap { position: relative; height: 100vh; width: 100%; overflow: hidden; perspective: 1500px; transform: scale(var(--ui-scale)); transform-origin: top left; width: calc(100% / var(--ui-scale)); height: calc(100vh / var(--ui-scale)); }
         #scene-container { position: relative; height: 100%; width: 100%; transform-style: preserve-3d; transition: transform 0.1s ease-out; }
         
         #space-grid {
@@ -92,9 +95,31 @@
             padding: 20px; position: relative; overflow: hidden; display: flex; flex-direction: column;
             backdrop-filter: blur(15px); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transform-style: preserve-3d; transition: transform 0.3s, border-color 0.3s;
+            transform: scale(var(--widget-scale));
         }
-        .widget:hover { transform: translateZ(20px) scale(1.02); border-color: var(--ac); box-shadow: var(--sh); }
+        .widget:hover { transform: translateZ(20px) scale(calc(var(--widget-scale) * 1.02)); border-color: var(--ac); box-shadow: var(--sh); }
         .widget h3 { font-family: var(--font-main); color: var(--ac); font-size: 14px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 5px var(--ac-dim); }
+
+        .scale-widget { gap: 12px; }
+        .scale-widget label { font-size: 11px; color: #aaa; display: flex; justify-content: space-between; align-items: center; }
+        .scale-widget input[type=range] { width: 100%; margin-top: 4px; accent-color: var(--ac); }
+
+        @media (max-width: 1400px) {
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            #scene-wrap { perspective: 1000px; }
+        }
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .sidebar { width: 60px; }
+            .nav-icon { margin-bottom: 18px; }
+        }
+        @media (max-width: 640px) {
+            body { font-size: 0.9rem; }
+            .sidebar { display: none; }
+            .widget { min-height: auto; }
+            #scene-wrap { height: auto; }
+            #view-track { transform: none; }
+        }
 
         .profile-card { display: flex; gap: 20px; align-items: center; }
         .level-badge { width: 70px; height: 70px; background: radial-gradient(circle, #222, #000); border: 2px solid var(--ac2); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--ac2); }
@@ -226,6 +251,16 @@
                                 </div>
                                 <img src="channels4_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70/0ff/000?text=OPR'">
                             </div>
+                        </div>
+
+                        <div class="widget scale-widget" style="transform: translateZ(20px);">
+                            <h3><i class="fas fa-sliders-h"></i> ÖLÇEK KONTROLLERİ</h3>
+                            <label>UI Ölçeği <span id="scale-value">100%</span></label>
+                            <input type="range" id="scale-slider" min="0.7" max="1.4" step="0.01" value="1">
+                            <label>Widget Ölçeği <span id="widget-scale-value">100%</span></label>
+                            <input type="range" id="widget-scale-slider" min="0.7" max="1.3" step="0.01" value="1">
+                            <label>Yazı Büyüklüğü <span id="font-scale-value">100%</span></label>
+                            <input type="range" id="font-scale-slider" min="0.8" max="1.5" step="0.01" value="1">
                         </div>
 
                         <div class="widget" style="transform: translateZ(10px);">
@@ -378,6 +413,31 @@
             }
         };
 
+        const ScaleControls = {
+            init() {
+                const ui = document.getElementById('scale-slider');
+                const widget = document.getElementById('widget-scale-slider');
+                const font = document.getElementById('font-scale-slider');
+
+                const update = () => {
+                    const uiScale = Number(ui.value);
+                    const widgetScale = Number(widget.value);
+                    const fontScale = Number(font.value);
+
+                    document.documentElement.style.setProperty('--ui-scale', uiScale);
+                    document.documentElement.style.setProperty('--widget-scale', widgetScale);
+                    document.documentElement.style.setProperty('--font-scale', fontScale);
+
+                    document.getElementById('scale-value').innerText = `${Math.round(uiScale * 100)}%`;
+                    document.getElementById('widget-scale-value').innerText = `${Math.round(widgetScale * 100)}%`;
+                    document.getElementById('font-scale-value').innerText = `${Math.round(fontScale * 100)}%`;
+                };
+
+                [ui, widget, font].forEach(el => el?.addEventListener('input', update));
+                update();
+            }
+        };
+
         const Canvas = {
             ctx: document.getElementById('c').getContext('2d'), w:0, h:0, stars:[], speed: 2,
             init() {
@@ -527,6 +587,7 @@
                     
                     userXP = UserDB.load(user);
                     this.initAchievements(); Community.init(); Mission.init(); Leaderboard.init(); Media.init();
+                    ScaleControls.init();
                     InputHandler.init(); Canvas.init(); this.loop();
                 },1000);
             },
